@@ -102,21 +102,25 @@ Example:
                 return '';
             }
 
-            var url = '//api.accusoft.com/v1/viewer/?';
-            url += 'document=' + document + '&';
-            url += 'key=' + key + '&';
-            url += 'viewertype=html5&';
-            url += 'viewerheight=' + height + '&';
-            url += 'viewerwidth=' + width + '&';
-            url += 'upperToolbarColor=' + viewerStyle.upperToolbarColor + '&';
-            url += 'lowerToolbarColor=' + viewerStyle.lowerToolbarColor + '&';
-            url += 'bottomToolbarColor=' + viewerStyle.bottomToolbarColor + '&';
-            url += 'backgroundColor=' + viewerStyle.backgroundColor + '&';
-            url += 'fontColor=' + viewerStyle.fontColor + '&';
-            url += 'buttonColor=' + viewerStyle.buttonColor + '&';
-            url += 'hidden=';
+            var url = '//api.accusoft.com/v1/viewer/';
 
-            return url;
+            var params = {
+                document: document,
+                key: key,
+                viewertype: "html5",
+                viewerheight: height,
+                viewerwidth: width
+            };
+
+            url += '?' + Object.keys(params).map(function (key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    }).join('&');
+
+            url += '&' + Object.keys(viewerStyle).map(function (key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(viewerStyle[key]);
+                    }).join('&');
+
+            return url + '&hidden=';
         }
     });
 </script>

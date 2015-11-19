@@ -1,0 +1,118 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element for the accusoft Document Viewer API
+
+Example:
+
+    <accusoft-element api-key="your-api-key"
+                      document="//url.to.the.document.ext">
+    </accusoft-element>
+
+@group WizeTeam Elements
+@element accusoft-element
+@demo demo/index.html
+-->
+<dom-module id="accusoft-element">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+        <iframe allowfullscreen="true"
+                width="[[width]]"
+                height="[[height]]"
+                frameborder="0"
+                allowtransparency="true"
+                src$="[[_getViewer(document, apiKey, height, width, viewerStyle)]]">
+        </iframe>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'accusoft-element',
+
+        properties: {
+            /**
+             * `document` the document url to
+             */
+            document: String,
+
+            /**
+             * `apiKey` is used to connect the
+             */
+            apiKey: String,
+
+            /**
+             * `height` is used for the viewer height, could be a number or a percentage
+             */
+            height: {type: String, value: "600"},
+            /**
+             * `width` is used for the viewer width, could be a number or a percentage
+             */
+            width: {type: String, value: "100%"},
+
+            /**
+             * Describes style for the viewer frame
+             */
+            viewerStyle: {
+                type: Object,
+                value: function () {
+                    return {
+                        upperToolbarColor: "757a7a",
+                        lowerToolbarColor: "000000",
+                        bottomToolbarColor: "000000",
+                        backgroundColor: "757a7a",
+                        fontColor: "ffffff",
+                        buttonColor: "white"
+                    }
+                }
+            }
+        },
+
+        //Element Events
+
+        /**
+         * The `accusoft-viewer-loaded` event is fired whenever viewer frame is loaded.
+         *
+         * @event `accusoft-viewer-loaded`
+         * @detail {{document: String}}
+         */
+
+        /**
+         * Used to generate the url for the accusoft API frame
+         *
+         * @params {{document: String, key: String, height: String, width: String, viewerStyle: Object}}
+         * @return {string} The full url for the viewer frame.
+         */
+        _getViewer: function (document, key, height, width, viewerStyle) {
+            var url = '//api.accusoft.com/v1/viewer/?';
+            url += 'document=' + document + '&';
+            url += 'key=' + key + '&';
+            url += 'viewertype=html5&';
+            url += 'viewerheight=' + height + '&';
+            url += 'viewerwidth=' + width + '&';
+            url += 'upperToolbarColor=' + viewerStyle.upperToolbarColor + '&';
+            url += 'lowerToolbarColor=' + viewerStyle.lowerToolbarColor + '&';
+            url += 'bottomToolbarColor=' + viewerStyle.bottomToolbarColor + '&';
+            url += 'backgroundColor=' + viewerStyle.backgroundColor + '&';
+            url += 'fontColor=' + viewerStyle.fontColor + '&';
+            url += 'buttonColor=' + viewerStyle.buttonColor + '&';
+            url += 'hidden=';
+
+            return url;
+        }
+    });
+</script>

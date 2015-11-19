@@ -98,6 +98,10 @@ Example:
          * @return {string} The full url for the viewer frame.
          */
         _getViewer: function (document, key, height, width, viewerStyle) {
+            if (document === '' || key === '') {
+                return '';
+            }
+
             var url = '//api.accusoft.com/v1/viewer/?';
             url += 'document=' + document + '&';
             url += 'key=' + key + '&';

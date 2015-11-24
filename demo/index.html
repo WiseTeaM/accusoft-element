@@ -18,6 +18,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <link rel="import" href="../accusoft-element.html">
     <link rel="import" href="../../iron-input/iron-input.html">
+
+    <style is="custom-style">
+        accusoft-element {
+            width: 65%;
+            height: 650px;
+        }
+    </style>
 </head>
 <body unresolved>
 <template is="dom-bind" id="demo">
@@ -28,6 +35,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                is="iron-input"
                bind-value="{{apiKey}}">
         <label for="key">API-KEY</label>
+
+        <span>Should use a valid accusoft account KEY to see the documment</span>
     </div>
 
     <div>
@@ -36,10 +45,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                bind-value="{{url}}"
                value="http://www.accusoft.com/wp-content/uploads/2014/09/prizm_view_doc_v2.pdf?1">
         <label for="doc">Document URL</label>
+
+        <span>Could use any document url</span>
     </div>
 
     <accusoft-element api-key="[[apiKey]]"
-                      document="[[url]]">
+                      document="[[url]]"
+                      width="100%"
+                      height="100%">
     </accusoft-element>
 </template>
 </body>

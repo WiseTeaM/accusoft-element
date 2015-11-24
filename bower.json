@@ -13,18 +13,18 @@
     "accusoft",
     "document-viewer"
   ],
-  "main": "accusoft-element.html",
+  "main": "index.html",
   "license": "http://polymer.github.io/LICENSE.txt",
-  "homepage": "https://github.com/wizeteam/seed-element/",
+  "homepage": "https://github.com/WizeTeaM/accusoft-element",
   "ignore": [
     "/.*",
     "/test/"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.1.0",
-    "iron-input": "PolymerElements/iron-input#~1.0.7"
+    "polymer": "Polymer/polymer#^1.1.0"
   },
   "devDependencies": {
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-input": "PolymerElements/iron-input#~1.0.7"
   }
 }

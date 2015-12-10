@@ -23,6 +23,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         accusoft-element {
             width: 65%;
             height: 650px;
+
+            margin: auto;
+        }
+
+        #status {
+            color: deepskyblue;
+            padding: auto;
+            margin: 25px;
+
+            text-align: center;
+        }
+
+        #status[loaded]{
+            color: greenyellow;
         }
     </style>
 </head>
@@ -34,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <input id="key"
                is="iron-input"
                bind-value="{{apiKey}}">
-        <label for="key">API-KEY</label>
+        <label for="key">API-KEY </label>
 
         <span>Should use a valid accusoft account KEY to see the documment</span>
     </div>
@@ -42,18 +56,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div>
         <input id="doc"
                is="iron-input"
-               bind-value="{{url}}"
-               value="http://www.accusoft.com/wp-content/uploads/2014/09/prizm_view_doc_v2.pdf?1">
-        <label for="doc">Document URL</label>
+               bind-value="{{url}}">
+        <label for="doc">Document URL </label>
 
         <span>Could use any document url</span>
     </div>
 
+    <div>
+        <input id="private" type="checkbox" checked="{{private::change}}">
+        <label for="private">use private server address</label>
+    </div>
+
+    <template is="dom-if" if="[[private]]">
+        <div>
+            <input id="service"
+                   is="iron-input"
+                   bind-value="{{service}}">
+            <label for="service">Use your own accusoft server or use the default cloud accusoft server (default)</label>
+        </div>
+    </template>
+
+    <div id="status" loaded$="[[loaded]]">[[status]]</div>
+
     <accusoft-element api-key="[[apiKey]]"
                       document="[[url]]"
-                      width="100%"
-                      height="100%">
+                      service-url="[[service]]"
+                      on-accusoft-viewer-loaded="_iframeLoaded">
     </accusoft-element>
 </template>
 </body>
+<script>
+    (function (document) {
+        'use strict';
+
+        var demo = document.querySelector('#demo');
+
+        demo.service = '//api.accusoft.com/v1/viewer/';
+        demo.url = 'http://www.accusoft.com/wp-content/uploads/2014/09/prizm_view_doc_v2.pdf?1';
+        demo.status = 'Element not loaded YET';
+        demo.loaded = false;
+
+        demo._iframeLoaded = function (event) {
+            var detail = event.detail;
+
+            console.log('event fired', detail);
+
+            demo.status = 'LOADED';
+            demo.loaded = true;
+        }
+    })(document);
+</script>
 </html>

@@ -35,7 +35,8 @@ Example:
             }
         </style>
 
-        <iframe allowfullscreen="true"
+        <iframe id="viewerFrame"
+                allowfullscreen="true"
                 frameborder="0"
                 allowtransparency="true"
                 src$="[[_getViewer(serviceUrl, document, apiKey, options)]]">
@@ -53,7 +54,7 @@ Example:
              */
             serviceUrl: {
                 type: String,
-                value: '//api.accusoft.com/v1/viewer/'
+                value: '//api.accusoft.com/v2/viewer/content'
             },
             /**
              * `apiKey` is used to connect the viewer with the accusoft service
@@ -99,21 +100,16 @@ Example:
             var url = serviceUrl;
             var params = {document: document};
 
-            if (serviceUrl === '//api.accusoft.com/v1/viewer/') {
+            if (serviceUrl === '//api.accusoft.com/v2/viewer/content') {
                 if (key === '') {
                     return '';
                 }
 
                 params.key = key;
                 options = Object.keys(options).length ? options : {
-                    viewertype: 'html5',
-                    upperToolbarColor: '757a7a',
-                    lowerToolbarColor: '000000',
-                    bottomToolbarColor: '000000',
-                    backgroundColor: '757a7a',
-                    fontColor: 'ffffff',
-                    buttonColor: 'white',
-                    hidden: ''
+                    viewertype: "html5",
+                    backgroundColor: "dddddd",
+                    hidden: "view,search,redact,esign"
                 };
             } else {
                 if (key !== '') {

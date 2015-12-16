@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             text-align: center;
         }
 
-        #status[loaded]{
+        #status[loaded] {
             color: greenyellow;
         }
     </style>
@@ -88,10 +88,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script>
     (function (document) {
         'use strict';
+        document.domain = 'localhost';
 
         var demo = document.querySelector('#demo');
 
-        demo.service = '//api.accusoft.com/v1/viewer/';
+        demo.service = '//api.accusoft.com/v2/viewer/content';
         demo.url = 'http://www.accusoft.com/wp-content/uploads/2014/09/prizm_view_doc_v2.pdf?1';
         demo.status = 'Element not loaded YET';
         demo.loaded = false;

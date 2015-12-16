@@ -1,0 +1,30 @@
+{
+  "name": "accusoft-element",
+  "version": "1.0.0",
+  "authors": [
+    "Yonathan Morales <yonathanmorales@gmail.com>"
+  ],
+  "description": "An element for the accusoft Document Viewer API.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "seed",
+    "accusoft",
+    "document-viewer"
+  ],
+  "main": "index.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/WizeTeaM/accusoft-element",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-input": "PolymerElements/iron-input#~1.0.7"
+  }
+}

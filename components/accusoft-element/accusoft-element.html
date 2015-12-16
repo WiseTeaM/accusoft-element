@@ -1,0 +1,142 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+An element for the accusoft Document Viewer API
+
+Example:
+
+    <accusoft-element api-key="your-api-key"
+                      document="//url.to.the.document.ext">
+    </accusoft-element>
+
+@group WizeTeam Elements
+@element accusoft-element
+@demo demo/index.html
+-->
+<dom-module id="accusoft-element">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+
+            iframe {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+
+        <iframe id="viewerFrame"
+                allowfullscreen="true"
+                frameborder="0"
+                allowtransparency="true"
+                src$="[[_getViewer(serviceUrl, document, apiKey, options)]]">
+        </iframe>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'accusoft-element',
+
+        properties: {
+            /**
+             * `serviceUrl` the url to of the service that
+             */
+            serviceUrl: {
+                type: String,
+                value: '//api.accusoft.com/v2/viewer/content'
+            },
+            /**
+             * `apiKey` is used to connect the viewer with the accusoft service
+             */
+            apiKey: {type: String, value: ''},
+
+            /**
+             * `document` the document url to
+             */
+            document: String,
+
+            /**
+             * Options to be passed for the viewer frame
+             */
+            options: {
+                type: Object,
+                value: function () {
+                    return {}
+                }
+            }
+        },
+
+        //Element Events
+
+        /**
+         * The `accusoft-viewer-loaded` event is fired whenever viewer frame is loaded.
+         *
+         * @event accusoft-viewer-loaded
+         * @detail {{document: String}}
+         */
+
+        /**
+         * Used to generate the url for the accusoft API frame
+         *
+         * @params {{serviceUrl: String, document: String, key: String, options: Object}}
+         * @return {string} The full url for the viewer frame.
+         */
+        _getViewer: function (serviceUrl, document, key, options) {
+            if (document === '') {
+                return '';
+            }
+
+            var url = serviceUrl;
+            var params = {document: document};
+
+            if (serviceUrl === '//api.accusoft.com/v2/viewer/content') {
+                if (key === '') {
+                    return '';
+                }
+
+                params.key = key;
+                options = Object.keys(options).length ? options : {
+                    viewertype: "html5",
+                    backgroundColor: "dddddd",
+                    hidden: "view,search,redact,esign"
+                };
+            } else {
+                if (key !== '') {
+                    params.key = key;
+                }
+            }
+
+            url += '?' + Object.keys(params).map(function (key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    }).join('&');
+
+            if (Object.keys(options).length) {
+                url += '&' + Object.keys(options).map(function (key) {
+                            return encodeURIComponent(key) + '=' + encodeURIComponent(options[key]);
+                        }).join('&');
+            }
+
+            this._frameLoaded();
+            return url;
+        },
+
+        /**
+         * Used to fire the event when the frame is loaded
+         *
+         */
+        _frameLoaded: function () {
+            this.fire('accusoft-viewer-loaded', {document: this.document, service: this.serviceUrl});
+        }
+    });
+</script>
